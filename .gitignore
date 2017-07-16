@@ -153,3 +153,12 @@ ENV/
 .ropeproject
 
 /db.sqlite3
+
+.gitignore
+.idea/
+blog/
+blogproject/
+comments/
+manage.py
+requestments.txt
+templates/
