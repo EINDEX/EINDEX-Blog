@@ -79,8 +79,6 @@ class IndexView(ListView):
         return data
 
 
-
-
 def index(request):
     post_list = Post.objects.all()
     paginator = Paginator(post_list, 10)
@@ -117,6 +115,7 @@ def detail(request, pk):
     ])
 
     post.body = md.convert(post.body)
+    post.increase_views()
 
     form = CommentForm()
 
