@@ -3,10 +3,11 @@ import markdown
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from markdown.extensions.toc import TocExtension
 
 from blog.models import Post
+from blog.models import Tag
 from comments.forms import CommentForm
 
 
@@ -29,7 +30,7 @@ class IndexView(ListView):
 
         return context
 
-    def paginate_data(self, paginator, page, is_paginated):
+    def pagination_data(self, paginator, page, is_paginated):
         if not is_paginated:
             return {}
         left = []
@@ -77,6 +78,50 @@ class IndexView(ListView):
         }
 
         return data
+
+
+class TagView(IndexView):
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'post_list'
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
+        return super(TagView, self).get_queryset().filter(tags=tag)
+
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/detail.html'
+    context_object_name = 'post'
+
+    def get(self, request, *args, **kwargs):
+        response = super(PostDetailView, self).get(request, *args, **kwargs)
+        self.object.increase_views()
+
+        return response
+
+    def get_object(self, queryset=None):
+        post = super(PostDetailView, self).get_object(queryset=None)
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+            TocExtension(slugify=slugify),
+        ])
+        post.body = md.convert(post.body)
+        post.toc = md.toc
+        return post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        form = CommentForm()
+        comment_list = self.object.comment_set.all()
+        context.update({
+            'form': form,
+            'comment_list': comment_list,
+        })
+        return context
 
 
 def index(request):

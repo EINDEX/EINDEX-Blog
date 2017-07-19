@@ -10,8 +10,9 @@ Copyright (C) 2016-2017 EINDEX Li
 @Last Modified : 2017/7/15
 """
 from django import template
+from django.db.models import Count
 
-from ..models import Post
+from ..models import Post, Tag
 
 register = template.Library()
 
@@ -24,3 +25,8 @@ def get_recent_posts(num=5):
 @register.simple_tag
 def archives():
     return Post.objects.dates('created_time', 'month', order='DESC')
+
+
+@register.simple_tag
+def get_tags():
+    return Tag.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
