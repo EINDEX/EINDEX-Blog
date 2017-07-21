@@ -14,7 +14,7 @@
             </div>
         </header>
         <div class="entry-content clearfix">
-            {{ post.body|safe }}
+            {{ post.html|safe }}
         </div>
         <footer>
             {% for tag in post.tags.all %}

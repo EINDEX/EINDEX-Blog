@@ -5,6 +5,8 @@ from django.urls import reverse
 # Create your models here.
 import markdown
 from django.utils.html import strip_tags
+from django.utils.text import slugify
+from markdown.extensions.toc import TocExtension
 
 
 class Tag(models.Model):
@@ -30,7 +32,9 @@ class Post(models.Model):
     author = models.ForeignKey(User)
 
     is_publish = models.BooleanField(default=False)
+    # 展示用
     html = models.TextField(editable=False, blank=True)
+    toc = models.TextField(editable=False, blank=True)
 
     def __str__(self):
         return self.title
@@ -46,9 +50,11 @@ class Post(models.Model):
         md = markdown.Markdown(extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+            TocExtension(slugify=slugify),
         ])
         self.html = md.convert(self.body)
-
+        self.toc = md.toc
         if not self.excerpt:
             self.excerpt = strip_tags(md.convert(self.body))[:200]
         super(Post, self).save(*args, **kwargs)
