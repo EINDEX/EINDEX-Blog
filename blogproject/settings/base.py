@@ -24,10 +24,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'haystack',
     'blog',
     'comments',
     'gunicorn',
+    'disqus',
 ]
 
 MIDDLEWARE = [
@@ -107,3 +109,10 @@ HAYSTACK_CONNECTIONS = {
 }
 HAYSTACK_SEARCH_RESULT_PER_PAGE = 10
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# Site
+SITE_ID = 1
+
+# Disqus
+DISQUS_API_KEY = 'Oy4JzwcLjymsPuT0KlSpJcKy733aV7ctgXReSoxWPvlGOC5DSKhULXBUmKiKiTAl'
+DISQUS_WEBSITE_SHORTNAME = 'eindex-blog'
