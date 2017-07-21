@@ -155,3 +155,4 @@ ENV/
 /db.sqlite3
 .idea/*
 /whoosh_index/
+/static/
