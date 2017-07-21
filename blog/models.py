@@ -29,6 +29,9 @@ class Post(models.Model):
 
     author = models.ForeignKey(User)
 
+    is_publish = models.BooleanField(default=False)
+    html = models.TextField(editable=False, blank=True)
+
     def __str__(self):
         return self.title
 
@@ -40,12 +43,14 @@ class Post(models.Model):
         return reverse('blog:detail', kwargs={'pk': self.pk})
 
     def save(self, *args, **kwargs):
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+        ])
+        self.html = md.convert(self.body)
+
         if not self.excerpt:
-            md = markdown.Markdown(extensions=[
-                'markdown.extensions.extra',
-                'markdown.extensions.codehilite',
-            ])
-            self.excerpt = strip_tags(md.convert(self.body))[:54]
+            self.excerpt = strip_tags(md.convert(self.body))[:200]
         super(Post, self).save(*args, **kwargs)
 
     class Meta:
