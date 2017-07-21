@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'haystack',
     'blog',
-    'comments',
     'gunicorn',
     'disqus',
 ]

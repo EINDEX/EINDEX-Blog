@@ -1,15 +1,10 @@
 # Create your views here.
-import markdown
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
-from django.utils.text import slugify
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import ListView, DetailView
-from markdown.extensions.toc import TocExtension
 
 from blog.models import Post
 from blog.models import Tag
-from comments.forms import CommentForm
 
 
 class IndexView(ListView):
@@ -110,12 +105,6 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
-        form = CommentForm()
-        comment_list = self.object.comment_set.all()
-        context.update({
-            'form': form,
-            'comment_list': comment_list,
-        })
         return context
 
 
