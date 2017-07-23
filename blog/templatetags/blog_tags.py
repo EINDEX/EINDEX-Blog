@@ -19,16 +19,22 @@ register = template.Library()
 
 @register.simple_tag
 def get_recent_posts(num=5):
-    return Post.objects.all().order_by('-created_time').filter(is_publish=True)[:num]
+    return Post.publish_objects.all().order_by('-created_time')[:num]
 
 
 @register.simple_tag
 def archives():
-    return Post.objects.dates('created_time', 'month', order='DESC').filter(is_publish=True)
+    return Post.publish_objects.dates('created_time', 'month', order='DESC')
 
 
 @register.simple_tag
 def get_tags():
-    # todo 标签云显示未发布文章
-    post_list = Post.objects.filter(is_publish=True)
-    return Tag.objects.annotate(num_posts=Count(post_list)).filter(num_posts__gt=0)
+    post_list = Post.publish_objects.all()
+    tag_set = set()
+    for post in post_list:
+        # for tag in post.tags.all():
+        #     if tag not in tag_set:
+        #         tag_set.add(tag)
+        # todo lambda
+        [tag_set.add(tag) for tag in post.tags.all() if tag not in tag_set]
+    return list(tag_set)

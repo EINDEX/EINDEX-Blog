@@ -17,6 +17,11 @@ class Tag(models.Model):
         return self.name
 
 
+class PostPublishManager(models.Manager):
+    def get_queryset(self):
+        return super(PostPublishManager, self).get_queryset().filter(is_publish=True)
+
+
 class Post(models.Model):
     title = models.CharField(max_length=70)
 
@@ -36,6 +41,10 @@ class Post(models.Model):
     # 展示用
     html = models.TextField(editable=False, blank=True)
     toc = models.TextField(editable=False, blank=True)
+
+    # 查询器
+    objects = models.Manager()
+    publish_objects = PostPublishManager()
 
     def __str__(self):
         return self.title

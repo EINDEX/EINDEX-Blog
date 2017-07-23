@@ -20,7 +20,7 @@ class AllPostsRssFeed(Feed):
     description = "EINDEX 的博客"
 
     def items(self):
-        return Post.objects.all().filter(is_publish=True)
+        return Post.publish_objects.all()
 
     def item_title(self, item):
         return '%s' % item.title

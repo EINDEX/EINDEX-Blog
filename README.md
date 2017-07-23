@@ -1,4 +1,9 @@
 # EINDEX's Blog
+
+### Todo
+-[x] Sitemap
+
+
 ### 已知 Bug
 
-- 标签云显示未发布文章
+-[x] 标签云显示未发布文章

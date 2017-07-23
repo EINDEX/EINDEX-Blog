@@ -1,5 +1,6 @@
 # Create your views here.
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
@@ -101,6 +102,8 @@ class PostDetailView(DetailView):
 
     def get_object(self, queryset=None):
         post = super(PostDetailView, self).get_object(queryset=None)
+        if not post.is_publish:
+            raise Http404()
         return post
 
     def get_context_data(self, **kwargs):
@@ -117,3 +120,11 @@ def archives(request, year, month):
     return render(request, 'blog/index.html', context={
         'post_list': post_list
     })
+
+
+def page404(request):
+    return render(request, '404.html')
+
+
+def page500(request):
+    return render(request, '500.html')

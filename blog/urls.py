@@ -10,11 +10,13 @@ Copyright (C) 2016-2017 EINDEX Li
 @Last Modified : 2017/7/15
 """
 from django.conf.urls import url
-from django.contrib.sitemaps.views import sitemap
 
 from blog.feeds import AllPostsRssFeed
-from blog.sitemap import BlogSitemap
 from . import views
+
+handler404 = 'views.page404'
+handler500 = 'views.page500'
+
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
