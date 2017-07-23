@@ -7,6 +7,7 @@ import markdown
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
+from editormd.models import EditorMdField
 
 
 class Tag(models.Model):
@@ -19,7 +20,7 @@ class Tag(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=70)
 
-    body = models.TextField()
+    body = EditorMdField()
 
     created_time = models.DateTimeField()
     modified_time = models.DateTimeField()

@@ -10,8 +10,10 @@ Copyright (C) 2016-2017 EINDEX Li
 @Last Modified : 2017/7/15
 """
 from django.conf.urls import url
+from django.contrib.sitemaps.views import sitemap
 
 from blog.feeds import AllPostsRssFeed
+from blog.sitemap import BlogSitemap
 from . import views
 
 urlpatterns = [
@@ -20,4 +22,5 @@ urlpatterns = [
     url(r'^archives/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.archives, name='archives'),
     url(r'^tag/(?P<pk>[0-9]+)/$', views.TagView.as_view(), name='tags'),
     url(r'^feed/$', AllPostsRssFeed(), name='rss'),
+
 ]

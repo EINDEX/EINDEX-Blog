@@ -13,7 +13,7 @@ class IndexView(ListView):
     context_object_name = 'post_list'
     paginate_by = 10
 
-    queryset = Post.objects.all().filter(is_publish=True)
+    queryset = Post.objects.filter(is_publish=True)
 
     def get_context_data(self, **kwargs):
 
@@ -116,18 +116,4 @@ def archives(request, year, month):
                                     ).order_by('-created_time')
     return render(request, 'blog/index.html', context={
         'post_list': post_list
-    })
-
-
-def search(request):
-    q = request.GET.get('q')
-    error_msg = ''
-
-    if not q:
-        error_msg = '请输入关键字'
-        return render(request, 'blog/index.html', {'error_msg': error_msg})
-    post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
-    return render(request, 'blog/index.html', {
-        'error_msg': error_msg,
-        'post_list': post_list,
     })
