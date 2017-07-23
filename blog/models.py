@@ -35,7 +35,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     views = models.PositiveIntegerField(default=0)
 
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete='SET_DEFAULT')
 
     is_publish = models.BooleanField(default=False)
     # 展示用

@@ -17,6 +17,7 @@ from . import views
 handler404 = 'views.page404'
 handler500 = 'views.page500'
 
+app_name = 'blog'
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
@@ -24,5 +25,4 @@ urlpatterns = [
     url(r'^archives/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.archives, name='archives'),
     url(r'^tag/(?P<pk>[0-9]+)/$', views.TagView.as_view(), name='tags'),
     url(r'^feed/$', AllPostsRssFeed(), name='rss'),
-
 ]
