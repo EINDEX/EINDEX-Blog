@@ -26,4 +26,4 @@ class AllPostsRssFeed(Feed):
         return '%s' % item.title
 
     def item_description(self, item):
-        return item.body
+        return item.html
