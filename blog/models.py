@@ -32,6 +32,8 @@ class Post(models.Model):
     created_time = models.DateTimeField(blank=True)
     modified_time = models.DateTimeField(editable=False, blank=True)
 
+    slug = models.SlugField(max_length=50, unique=True)
+
     excerpt = models.CharField(max_length=200, blank=True)
 
     tags = models.ManyToManyField(Tag, blank=True)
@@ -56,7 +58,7 @@ class Post(models.Model):
         self.save(update_fields=['views'])
 
     def get_absolute_url(self):
-        return reverse('blog:detail', kwargs={'pk': self.pk})
+        return reverse('blog:detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         md = markdown.Markdown(extensions=[
