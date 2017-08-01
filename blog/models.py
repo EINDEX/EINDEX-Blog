@@ -30,16 +30,16 @@ class Post(models.Model):
     body = EditorMdField()
 
     created_time = models.DateTimeField(blank=True)
-    modified_time = models.DateTimeField(editable=False, blank=True)
+    modified_time = models.DateTimeField(blank=True)
 
     slug = models.SlugField(max_length=50, unique=True)
 
     excerpt = models.CharField(max_length=200, blank=True)
 
     tags = models.ManyToManyField(Tag, blank=True)
-    views = models.PositiveIntegerField(default=0)
+    views = models.PositiveIntegerField(editable=False, default=0)
 
-    author = models.ForeignKey(User, on_delete='SET_DEFAULT')
+    author = models.ForeignKey(User, on_delete='SET_DEFAULT', default=User.objects.first())
 
     is_publish = models.BooleanField(editable=False, default=False)
     # 展示用
