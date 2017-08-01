@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -7,6 +8,7 @@ import markdown
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
+from markdown_checklist.extension import ChecklistExtension
 from editormd.models import EditorMdField
 
 
@@ -27,8 +29,8 @@ class Post(models.Model):
 
     body = EditorMdField()
 
-    created_time = models.DateTimeField()
-    modified_time = models.DateTimeField()
+    created_time = models.DateTimeField(blank=True)
+    modified_time = models.DateTimeField(editable=False, blank=True)
 
     excerpt = models.CharField(max_length=200, blank=True)
 
@@ -61,8 +63,12 @@ class Post(models.Model):
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
             'markdown.extensions.toc',
+            ChecklistExtension(),
             TocExtension(slugify=slugify),
         ])
+        if not self.created_time:
+            self.created_time = datetime.datetime.now()
+        self.modified_time = datetime.datetime.now()
         self.html = md.convert(self.body)
         self.toc = md.toc
         if not self.excerpt:
