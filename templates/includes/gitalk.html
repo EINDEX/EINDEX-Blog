@@ -1,0 +1,13 @@
+<div id="gitalk-container"></div>
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'b782b7c2d399fb3218d0',
+        clientSecret: '56ea780a5a8c2b93bbd9d6543bb1bdb2f0f0db37',
+        repo: 'EINDEX-Blog',
+        owner: 'EINDEX',
+        admin: ['EINDEX'],
+        id: '{{ identifier }}',
+    })
+    gitalk.render('gitalk-container')
+</script>

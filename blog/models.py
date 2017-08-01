@@ -69,5 +69,9 @@ class Post(models.Model):
             self.excerpt = strip_tags(md.convert(self.body))[:200]
         super(Post, self).save(*args, **kwargs)
 
+    @property
+    def identifier(self):
+        return 'post_%s' % self.pk
+
     class Meta:
         ordering = ['-created_time', 'title']
