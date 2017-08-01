@@ -117,3 +117,8 @@ SITE_ID = 1
 # Disqus
 DISQUS_API_KEY = 'Oy4JzwcLjymsPuT0KlSpJcKy733aV7ctgXReSoxWPvlGOC5DSKhULXBUmKiKiTAl'
 DISQUS_WEBSITE_SHORTNAME = 'eindex-blog'
+
+# Google Analytics
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'UA-80131414-1',
+}
