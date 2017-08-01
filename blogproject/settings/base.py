@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'haystack',
     'blog',
     'gunicorn',
-    'disqus',
     'editormd',
 ]
 
