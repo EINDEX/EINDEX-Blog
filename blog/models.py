@@ -41,7 +41,7 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete='SET_DEFAULT')
 
-    is_publish = models.BooleanField(default=False)
+    is_publish = models.BooleanField(editable=False, default=False)
     # 展示用
     html = models.TextField(editable=False, blank=True)
     toc = models.TextField(editable=False, blank=True)
