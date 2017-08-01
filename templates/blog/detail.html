@@ -16,29 +16,17 @@
             {{ post.html|safe }}
         </div>
         <footer>
-            <div class="widget widget-tag-cloud">
-                <ul>
-                    {% for tag in post.tags.all %}
-                        <li>
-                            <a href="{% url 'blog:tags' tag.pk %}">{{ tag.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% include 'includes/_partial/post/tags_bar.html' with tags=post.tags.all %}
             <div class="share">
 
             </div>
+            {% if post.pass_date > 90 %}
+                {% include 'includes/_partial/post/updated.html' with time=post.modified_time %}
+            {% endif %}
         </footer>
     </article>
-
-    <section class="comment-area" id="comment-area">
-        <h1>Comments</h1>
-        {% include 'includes/gitalk.html' with identifier=post.identifier %}
-    </section>
+    {% include 'includes/_partial/post/comment.html' with identifier=post.identifier %}
 {% endblock main %}
 {% block toc %}
-    <div class="widget widget-content">
-        <h3 class="widget-title">文章目录</h3>
-        {{ post.toc|safe }}
-    </div>
+    {% include 'includes/_partial/post/toc.html' %}
 {% endblock toc %}

@@ -1,0 +1,9 @@
+<div class="widget widget-tag-cloud">
+    <ul>
+        {% for tag in tags %}
+            <li>
+                <a href="{% url 'blog:tags' tag.pk %}">{{ tag.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
