@@ -23,6 +23,12 @@
             {% if post.pass_date > 90 %}
                 {% include 'includes/_partial/post/updated.html' with time=post.modified_time %}
             {% endif %}
+            <div class="prev-and-next">
+                <span class="prev">{% if prev %}<a href="{{ prev.get_absolute_url }}">{{ prev.title }}</a>{% else %}
+                    没有上一篇了{% endif %}</span>
+                <span class="next">{% if next %}<a href="{{ next.get_absolute_url }}">{{ next.title }}</a>{% else %}
+                    没有下一篇了{% endif %}</span>
+            </div>
         </footer>
     </article>
     {% include 'includes/_partial/post/comment.html' with identifier=post.identifier %}

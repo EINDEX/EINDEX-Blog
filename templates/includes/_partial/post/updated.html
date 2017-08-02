@@ -1,4 +1,6 @@
 {% load blog_filter %}
 {% if time|timesince:'int' > 90 %}
-    <span>提醒：本文最后更新于 {{ time|daysince }}，文中所描述的信息可能已发生改变，请谨慎使用。</span>
+    <div class="out-date-warning">
+        <span>提醒：本文最后更新于 {{ time|daysince }}，文中所描述的信息可能已发生改变，请谨慎使用。</span>
+    </div>
 {% endif %}

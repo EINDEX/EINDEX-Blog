@@ -108,7 +108,20 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
+        post = context.get('post')
+
+        post_pn_data = self.get_post_prev_and_next(post)
+
+        context.update(post_pn_data)
         return context
+
+    def get_post_prev_and_next(self, post):
+        p = Post.objects.filter(created_time__gt=post.created_time).first()
+        n = Post.objects.filter(created_time__lt=post.created_time).first()
+        return {
+            'prev': p,
+            'next': n,
+        }
 
 
 # 归档
