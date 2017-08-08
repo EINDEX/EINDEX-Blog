@@ -1,8 +1,8 @@
 # Create your views here.
-from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.views.generic.dates import MonthArchiveView
 
 from blog.models import Post
 from blog.models import Tag
@@ -125,14 +125,13 @@ class PostDetailView(DetailView):
 
 
 # 归档
-def archives(request, year, month):
-    post_list = Post.objects.filter(created_time__year=year,
-                                    created_time__month=month,
-                                    is_publish=True,
-                                    ).order_by('-created_time')
-    return render(request, 'blog/index.html', context={
-        'post_list': post_list
-    })
+class ArchiveView(MonthArchiveView):
+    queryset = Post.publish_objects.all()
+    date_field = 'created_time'
+    model = Post
+    make_object_list = True
+    template_name = 'blog/index.html'
+    context_object_name = 'post_list'
 
 
 def page404(request):

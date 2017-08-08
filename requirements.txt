@@ -1,4 +1,5 @@
-Django==2.0.dev20170721222113
+click==6.7
+Django==2.0.dev20170807143355
 django-editormd==0.2.5
 django-haystack==2.6.1
 django-static-precompiler==1.6
@@ -6,8 +7,10 @@ gevent==1.2.2
 greenlet==0.4.12
 gunicorn==19.7.1
 jieba==0.38
+Jinja2==2.9.6
 Markdown==2.6.8
 markdown-checklist==0.4.1
+MarkupSafe==1.0
 mock==2.0.0
 mysqlclient==1.3.10
 pbr==3.1.1

@@ -156,3 +156,4 @@ ENV/
 .idea/*
 /whoosh_index/
 /static/
+/fabfile.py
