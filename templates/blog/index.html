@@ -22,7 +22,7 @@
     {% include 'includes/archives.html' with date_list=date_list %}
     {% get_tags as tag_list %}
     {% include 'includes/tags.html' with tag_list=tag_list %}
-    <div class="rss">
+    <div class="rss row">
         <a href="{% url 'blog:rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
     </div>
 {% endblock side %}

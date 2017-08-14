@@ -2,7 +2,7 @@
     <h3 class="widget-title">标签云</h3>
     <ul>
         {% for tag in tag_list %}
-            <li>
+            <li class="tag-item">
                 {% include 'includes/tag.html' with tag=tag %}
             </li>
         {% empty %}

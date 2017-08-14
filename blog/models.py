@@ -70,7 +70,8 @@ class Post(models.Model):
         ])
         if not self.created_time:
             self.created_time = datetime.datetime.now()
-        self.modified_time = datetime.datetime.now()
+        if not self.modified_time:
+            self.modified_time = datetime.datetime.now()
         self.html = md.convert(self.body)
         self.toc = md.toc
         if not self.excerpt:
