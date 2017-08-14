@@ -1,1 +1,2 @@
-<a href="{% url 'blog:tags' tag.pk %}">{{ tag.name }}</a>
+<div class="tag"><a href="{% url 'blog:tags' tag.pk %}"><span class="label label-default">{{ tag.name }}</span></a>
+</div>

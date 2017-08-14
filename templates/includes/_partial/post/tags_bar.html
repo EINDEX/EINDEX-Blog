@@ -1,9 +1,7 @@
 <div class="widget widget-tag-cloud">
-    <ul>
+    <nav class="tags-bar">
         {% for tag in tags %}
-            <li>
-                <a href="{% url 'blog:tags' tag.pk %}"><span class="label label-default">{{ tag.name }}</span></a>
-            </li>
+            {% include 'includes/tag.html' with tag=tag %}
         {% endfor %}
-    </ul>
+    </nav>
 </div>
