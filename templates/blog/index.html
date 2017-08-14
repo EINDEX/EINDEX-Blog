@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load blog_tags %}
 {% block main %}
     {% if error_msg %}
         <p>{{ error_msg }}</p>
@@ -11,30 +12,17 @@
     {% endfor %}
 
     {% if is_paginated %}
-        <div class="pagination">
-            {% if first %}
-                <a href="?page=1">1</a>
-            {% endif %}
-            {% if left %}
-                {% if left_has_more %}
-                    <span>...</span>
-                {% endif %}
-                {% for i in left %}
-                    <a href="?page={{ i }}">{{ i }}</a>
-                {% endfor %}
-            {% endif %}
-            <a href="?page={{ page_obj.number }}" style="color: red">{{ page_obj.number }}</a>
-            {% if right %}
-                {% for i in right %}
-                    <a href="?page={{ i }}">{{ i }}</a>
-                {% endfor %}
-                {% if right_has_more %}
-                    <span>...</span>
-                {% endif %}
-            {% endif %}
-            {% if last %}
-                <a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
-            {% endif %}
-        </div>
+        {% include 'includes/_partial/paginator.html' with paginator=paginator %}
     {% endif %}
 {% endblock main %}
+{% block side %}
+    {% get_recent_posts as recent_post_list %}
+    {% include 'includes/recent_post.html' with recent_post_list=recent_post_list %}
+    {% archives as date_list %}
+    {% include 'includes/archives.html' with date_list=date_list %}
+    {% get_tags as tag_list %}
+    {% include 'includes/tags.html' with tag_list=tag_list %}
+    <div class="rss">
+        <a href="{% url 'blog:rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+    </div>
+{% endblock side %}

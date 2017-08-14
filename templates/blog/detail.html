@@ -15,7 +15,7 @@
         <div class="entry-content clearfix">
             {{ post.html|safe }}
         </div>
-        <footer>
+        <div class="row">
             {% include 'includes/_partial/post/tags_bar.html' with tags=post.tags.all %}
             <div class="share">
 
@@ -23,16 +23,49 @@
             {% if post.pass_date > 90 %}
                 {% include 'includes/_partial/post/updated.html' with time=post.modified_time %}
             {% endif %}
-            <div class="prev-and-next">
-                <span class="prev">{% if prev %}<a href="{{ prev.get_absolute_url }}">{{ prev.title }}</a>{% else %}
-                    没有上一篇了{% endif %}</span>
-                <span class="next">{% if next %}<a href="{{ next.get_absolute_url }}">{{ next.title }}</a>{% else %}
-                    没有下一篇了{% endif %}</span>
+
+            <div class="prev-and-next col-md-12">
+                <nav aria-label="...">
+                    <ul class="pager">
+                        {% if prev %}
+                            <li class="previous"><a href="{{ prev.get_absolute_url }}">
+                                <span aria-hidden="true"
+                                      class="glyphicon glyphicon-chevron-left"></span>{{ prev.title }}
+                            </a></li>
+                        {% endif %}
+                        {% if next %}
+                            <li class="next"><a href="{{ next.get_absolute_url }}">{{ next.title }}
+                                <span
+                                        aria-hidden="true"
+                                        class="glyphicon glyphicon-chevron-right"></span>
+                            </a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
-        </footer>
+        </div>
     </article>
     {% include 'includes/_partial/post/comment.html' with identifier=post.identifier %}
 {% endblock main %}
-{% block toc %}
+{% block side %}
     {% include 'includes/_partial/post/toc.html' %}
-{% endblock toc %}
+{% endblock side %}
+{% block footer %}
+    {% load blog_tags %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {% get_recent_posts as recent_post_list %}
+                {% include 'includes/recent_post.html' with recent_post_list=recent_post_list %}
+            </div>
+            <div class="col-md-4">
+                {% archives as date_list %}
+                {% include 'includes/archives.html' with date_list=date_list %}
+            </div>
+            <div class="col-md-4">
+                {% get_tags as tag_list %}
+                {% include 'includes/tags.html' with tag_list=tag_list %}
+            </div>
+        </div>
+    </div>
+{% endblock footer %}

@@ -3,7 +3,18 @@
 <!DOCTYPE html>
 <html>
 {% include 'includes/_partial/head.html' %}
-<body>
+<style>
+    body {
+        padding-top: 70px;
+    }
+
+</style>
+<style>
+    .post a {
+        color: black;
+    }
+</style>
+<body lang="en">
 <div class="container">
     {% include 'includes/_partial/header.html' %}
 </div>
@@ -11,43 +22,35 @@
 <div class="content-body">
     <div class="container">
         <div class="row">
-            <main class="col-md-8">
+            <main class="col-md-9">
                 {% block main %}
                 {% endblock main %}
             </main>
-            <aside class="col-md-4">
-                {% block toc %}
-                {% endblock %}
+            <aside class="col-md-3">
                 {% block side %}
-                    {% get_recent_posts as recent_post_list %}
-                    {% include 'includes/recent_post.html' with recent_post_list=recent_post_list %}
-                    {% archives as date_list %}
-                    {% include 'includes/archives.html' with date_list=date_list %}
-                    {% get_tags as tag_list %}
-                    {% include 'includes/tags.html' with tag_list=tag_list %}
-                    <div class="rss">
-                        <a href="{% url 'blog:rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
-                    </div>
                 {% endblock side %}
             </aside>
         </div>
     </div>
 </div>
-{% include 'includes/_partial/footer.html' %}
+<footer id="site-footer">
+    {% block footer %}
+    {% endblock footer %}
+    {% include 'includes/_partial/footer.html' %}
+</footer>
 
-<!-- Mobile Menu -->
-<div class="overlay overlay-hugeinc">
-    <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
-    <nav>
-        <ul>
-            <li><a href="{% url "blog:index" %}">首页</a></li>
-        </ul>
-    </nav>
-</div>
-<script id="dsq-count-scr" src="//eindex-blog.disqus.com/count.js" async></script>
-</body>
-<script src="{% static 'blog/js/script.js' %}"></script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<!-- js -->
+<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<script src="https://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 {% include 'includes/_partial/plugins/google_anaytics.html' %}
 {% include 'includes/_partial/plugins/baidu_push.html' %}
-
+</body>
 </html>

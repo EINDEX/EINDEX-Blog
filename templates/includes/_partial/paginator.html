@@ -1,0 +1,25 @@
+<nav class="Page navigation">
+    <ul class="pagination">
+        {% if not first %}
+            <li class="previous">
+                <a href="?page={{ page_obj.number }}"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            </li>
+        {% endif %}
+        {% if left %}
+            {% for i in left %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+        {% endif %}
+        <li><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+        {% if right %}
+            {% for i in right %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+        {% endif %}
+        {% if not last %}
+            <li class="next">
+                <a href="?page={{ page_obj.number }}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

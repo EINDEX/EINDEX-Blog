@@ -2,7 +2,7 @@
     <ul>
         {% for tag in tags %}
             <li>
-                <a href="{% url 'blog:tags' tag.pk %}">{{ tag.name }}</a>
+                <a href="{% url 'blog:tags' tag.pk %}"><span class="label label-default">{{ tag.name }}</span></a>
             </li>
         {% endfor %}
     </ul>

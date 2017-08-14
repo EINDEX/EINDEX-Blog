@@ -13,6 +13,7 @@ class IndexView(ListView):
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
     paginate_by = 10
+    number_of_pages_show = 4
 
     queryset = Post.objects.filter(is_publish=True)
 
@@ -30,13 +31,12 @@ class IndexView(ListView):
         return context
 
     def pagination_data(self, paginator, page, is_paginated):
+        NOPS = self.number_of_pages_show
         if not is_paginated:
             return {}
+
         left = []
         right = []
-
-        left_has_more = False
-        right_has_more = False
 
         first = False
         last = False
@@ -46,36 +46,18 @@ class IndexView(ListView):
         page_range = paginator.page_range
 
         if page_number == 1:
-            right = page_range[page_number:page_number + 2]
-            if right[-1] < total_pages - 1:
-                right_has_more = True
-
-            if right_has_more < total_pages:
-                last = True
-
-        elif page_number == total_pages:
-            last = page_range[(page_number - 3) if (page_number - 3) > 0 else 0:page_number - 1]
-            right = page_range[page_number:page_number + 2]
-
-            if right[-1] < total_pages - 1:
-                right_has_more = True
-            if right[-1] < total_pages:
-                last = True
-
-            if left[0] > 2:
-                left_has_more = True
-            if left[0] > 1:
-                first = True
+            first = True
+        if page_number == total_pages:
+            last = True
+        left = page_range[0 if page_number - NOPS < 0 else page_number - NOPS:page_number - 1]
+        right = page_range[page_number:total_pages if page_number + NOPS > total_pages else page_number + NOPS]
 
         data = {
             'left': left,
             'right': right,
-            'left_has_more': left_has_more,
-            'right_has_more': right_has_more,
             'first': first,
             'last': last,
         }
-
         return data
 
 
@@ -116,8 +98,8 @@ class PostDetailView(DetailView):
         return context
 
     def get_post_prev_and_next(self, post):
-        p = Post.objects.filter(created_time__gt=post.created_time).first()
-        n = Post.objects.filter(created_time__lt=post.created_time).first()
+        p = Post.publish_objects.filter(created_time__gt=post.created_time).last()
+        n = Post.publish_objects.filter(created_time__lt=post.created_time).first()
         return {
             'prev': p,
             'next': n,
