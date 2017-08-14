@@ -1,11 +1,7 @@
 <div class="widget widget-tag-cloud">
     <nav class="tags-bar">
-        <ul>
-            {% for tag in tags %}
-                <li class="tag-item">
-                    {% include 'includes/tag.html' with tag=tag %}
-                </li>
-            {% endfor %}
-        </ul>
+        {% for tag in tags %}
+            {% include 'includes/tag.html' with tag=tag %}
+        {% endfor %}
     </nav>
 </div>
