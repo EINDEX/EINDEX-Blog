@@ -64,9 +64,8 @@ class Post(models.Model):
         md = markdown.Markdown(extensions=[
             'markdown.extensions.extra',
             'markdown.extensions.codehilite',
-            'markdown.extensions.toc',
             ChecklistExtension(),
-            TocExtension(slugify=slugify),
+            TocExtension(baselevel=3, slugify=slugify),
         ])
         if not self.created_time:
             self.created_time = datetime.datetime.now()
